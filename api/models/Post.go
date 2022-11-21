@@ -15,8 +15,8 @@ type Post struct {
 	Content   string    `gorm:"size:255;not null" json:"content"`
 	Author    User      `json:"author"`
 	AuthorId  uint32    `gorm:"not null" json:"author_id"`
-	CreatedAt time.Time `gorm:default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt time.Time `gorm:default:CURRENT_TIMESTAMP" json:"updated_at"`
+	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 }
 
 func (p *Post) Prepare() {
@@ -57,7 +57,7 @@ func (p *Post) SavePost(db *gorm.DB) (*Post, error) {
 	return p, nil
 }
 
-func (p *Post) FindAllUsers(db *gorm.DB) (*[]Post, error) {
+func (p *Post) FindAllPosts(db *gorm.DB) (*[]Post, error) {
 	posts := []Post{}
 	if err := db.Debug().Model(&Post{}).Limit(100).Find(&posts).Error; err != nil {
 		return &[]Post{}, err
